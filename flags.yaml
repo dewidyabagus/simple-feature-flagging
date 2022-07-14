@@ -1,0 +1,14 @@
+feature-get-payment:
+  percentage: 50
+  rule: key eq "TRL"
+  true: true
+  false: false
+  default: false
+  version: 1
+
+feature-generate:
+  percentage: 50
+  true: "ya"
+  false: "tidak"
+  default: "default"
+  version: 1
