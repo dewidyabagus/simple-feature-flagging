@@ -1,6 +1,9 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -45,4 +48,38 @@ func (c *Controller) Generate(ctx echo.Context) error {
 	}
 
 	return ctx.JSON(http.StatusOK, echo.Map{"message": "success", "data": results})
+}
+
+type FFController struct {
+}
+
+func NewFFController() *FFController {
+	return &FFController{}
+}
+
+func (f *FFController) NotifierHook(ctx echo.Context) error {
+	payload := map[string]interface{}{}
+
+	signature := strings.ReplaceAll(ctx.Request().Header.Get("X-Hub-Signature-256"), "sha256=", "")
+
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(ctx.Request().Body)
+	defer ctx.Request().Body.Close()
+
+	body := buf.Bytes()
+	if valid, err := CompareSignatures(signature, GetSignature([]byte("secret"), body)); err != nil {
+		return ctx.JSON(http.StatusBadRequest, echo.Map{"message": err.Error()})
+
+	} else if !valid {
+		return ctx.JSON(http.StatusUnauthorized, echo.Map{"message": "access unauthorized"})
+
+	}
+
+	if err := json.Unmarshal(body, &payload); err != nil {
+		return ctx.JSON(http.StatusBadRequest, echo.Map{"message": err.Error()})
+	}
+
+	fmt.Println(string(body))
+
+	return ctx.JSON(http.StatusOK, echo.Map{"message": "successfully send notifier"})
 }

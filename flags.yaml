@@ -1,6 +1,6 @@
 feature-get-payment:
-  percentage: 50
-  rule: key eq "TRL"
+  percentage: 100
+  rule: userId in ["1","2","3"]
   true: true
   false: false
   default: false

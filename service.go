@@ -43,7 +43,11 @@ func (s *service) Pay(payload Payment) error {
 func (s *service) Get(userID string, orderID string) (*Payment, error) {
 	payment := &Payment{}
 
-	fgStatus, err := s.fg.BoolVariation(flagKeyFeaturePayment, ffuser.NewUser(userID), false)
+	// With default key
+	// fgStatus, err := s.fg.BoolVariation(flagKeyFeaturePayment, ffuser.NewUser(userID), false)
+
+	// With custom key exapmle: userId
+	fgStatus, err := s.fg.BoolVariation(flagKeyFeaturePayment, ffuser.NewUserBuilder("").AddCustom("userId", userID).Build(), false)
 	if err != nil {
 		return nil, fmt.Errorf("feature flagging error: %w", err)
 	}
