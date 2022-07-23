@@ -18,22 +18,21 @@ func NewController(service Servicer) *Controller {
 	return &Controller{service: service}
 }
 
-func (c *Controller) Pay(ctx echo.Context) error {
-	return ctx.JSON(http.StatusCreated, echo.Map{"message": "successful payment"})
-}
-
+// To Do: Mengembalikan rincian transaksi sesuai dengan ID pembayaran pada endpoint ini akan mengembalikan
+//        laporan dengan format berbeda untuk user tertentu karena menerapkan feature flagging pada bagian
+//        business (core) dari endpoint ini.
 func (c *Controller) Get(ctx echo.Context) error {
-	exampleUserID := ctx.Request().Header.Get("example-user-id")
-	if strings.TrimSpace(exampleUserID) == "" {
+	userIdentity := ctx.Request().Header.Get("user_identity")
+	if strings.TrimSpace(userIdentity) == "" {
 		return ctx.JSON(http.StatusBadRequest, echo.Map{"message": "header not valid"})
 	}
 
-	orderID := ctx.Param("order_id")
-	if strings.TrimSpace(orderID) == "" {
-		return ctx.JSON(http.StatusBadRequest, echo.Map{"message": "order id cannot be empty"})
+	paymentID := ctx.Param("payment_id")
+	if strings.TrimSpace(paymentID) == "" {
+		return ctx.JSON(http.StatusBadRequest, echo.Map{"message": "payment id cannot be empty"})
 	}
 
-	result, err := c.service.Get(exampleUserID, orderID)
+	result, err := c.service.Get(userIdentity, paymentID)
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, echo.Map{"message": err.Error()})
 	}
