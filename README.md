@@ -10,7 +10,7 @@ Feature flags (feature toggles) adalah teknik yang digunakan untuk memodifikasi 
     — Martin Fowler</h5>
   <p>
 </blockquote>
-Seperti halnya saklar lampu, developer bisa mengaktifkan dan menonaktifkan suatu feature sesuai dengan kebutuhan. Teknik ini sangat bermanfaat ketika developer ingin release suatu feature baru untuk user atau proses yang memenuhi kriteria, hal ini digunakan untuk memastikan feature yang di release tidak ada kendala dan ketika ada kendala dapat langsung dimatikan tanpa harus merubah kode dan beralih semua proses menggunakan feature sebelumnya.
+Seperti halnya saklar lampu, developer bisa mengaktifkan dan menonaktifkan suatu feature sesuai dengan kebutuhan. Teknik ini sangat bermanfaat ketika developer ingin release suatu feature baru untuk user atau proses yang memenuhi kriteria, hal ini digunakan untuk memastikan feature yang di release tidak ada kendala dan ketika ada kendala dapat langsung dimatikan tanpa harus merubah kode dan beralih semua proses menggunakan feature sebelumnya. Dan selain itu masih banyak hal yang dapat dilakukan dengan teknik feature flags.
 
 Pada penerapannya, saya membuat sistem backend (Golang) yang menerapkan feature flags dimana package yang digunakan `go-feature-flag`. Sangat banyak kemudahan yang diberikan oleh package tersebut yang dapat dibaca pada [dokumentasi](https://docs.gofeatureflag.org/v0.27.1).
 
