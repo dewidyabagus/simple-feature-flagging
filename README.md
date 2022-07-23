@@ -28,3 +28,4 @@ Pada penerapannya, saya membuat sistem backend (Golang) yang menerapkan feature 
 
 ## References
 - [Pentingnya Feature Toggles Untuk Mobile Apps](https://medium.com/easyread/pentingnya-feature-toggles-feature-flags-untuk-mobile-apps-a31302c247f9)
+- [Feature Toggles (aka Feature Flags)](https://martinfowler.com/articles/feature-toggles.html)
