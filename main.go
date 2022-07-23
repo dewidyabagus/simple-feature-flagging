@@ -61,8 +61,7 @@ func main() {
 	handler := NewController(service)
 
 	// Routing Service
-	e.POST("/pay", handler.Pay)
-	e.GET("/pay/:order_id", handler.Get)
+	e.GET("/payment/:payment_id", handler.Get)
 	e.GET("/generate", handler.Generate)
 
 	// Start Server
