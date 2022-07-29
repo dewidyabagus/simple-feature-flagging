@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 
 	"github.com/thomaspoignant/go-feature-flag/ffuser"
 )
 
 type Payment struct {
-	OrderID string  `json:"order_id"`
-	Amount  float64 `json:"amount"`
-	Notes   string  `json:"notes"`
-	Version string  `json:"version,omitempty"`
+	PaymentID int     `json:"payment_id"`
+	Amount    float64 `json:"amount"`
+	Notes     string  `json:"notes"`
+	Version   string  `json:"version,omitempty"`
 }
 
 type service struct {
@@ -20,7 +21,7 @@ type service struct {
 type Servicer interface {
 	Pay(payload Payment) error
 
-	Get(userID string, orderID string) (*Payment, error)
+	Get(role string, paymentID int) (*Payment, error)
 
 	Generate() (map[string]string, error)
 }
@@ -40,20 +41,25 @@ func (s *service) Pay(payload Payment) error {
 	return nil
 }
 
-func (s *service) Get(userID string, orderID string) (*Payment, error) {
-	payment := &Payment{}
+func (s *service) Get(role string, paymentID int) (*Payment, error) {
+	payment := &Payment{
+		PaymentID: paymentID,
+		Amount:    rand.Float64(),
+		Notes:     "examples notes",
+		Version:   "",
+	}
 
 	// With default key
 	// fgStatus, err := s.fg.BoolVariation(flagKeyFeaturePayment, ffuser.NewUser(userID), false)
 
 	// With custom key exapmle: userId
-	fgStatus, err := s.fg.BoolVariation(flagKeyFeaturePayment, ffuser.NewUserBuilder("").AddCustom("userId", userID).Build(), false)
+	fgStatus, err := s.fg.BoolVariation(flagKeyFeaturePayment, ffuser.NewUserBuilder("").AddCustom("role", role).Build(), false)
 	if err != nil {
 		return nil, fmt.Errorf("feature flagging error: %w", err)
 	}
 
 	if fgStatus {
-		payment.Version = "new version with new calculation"
+		payment.Version = "new version"
 	} else {
 		payment.Version = "old version"
 	}

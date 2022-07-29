@@ -9,6 +9,7 @@ import (
 	"time"
 
 	echo "github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	ffclient "github.com/thomaspoignant/go-feature-flag"
 )
 
@@ -61,6 +62,7 @@ func main() {
 	handler := NewController(service)
 
 	// Routing Service
+	e.Use(middleware.Logger())
 	e.GET("/payment/:payment_id", handler.Get)
 	e.GET("/generate", handler.Generate)
 

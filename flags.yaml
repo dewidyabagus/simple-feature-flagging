@@ -1,6 +1,6 @@
 feature-get-payment:
   percentage: 100
-  rule: userId in ["1","2","3"]
+  rule: role in ["quality_assurance","product_owner"]
   true: true
   false: false
   default: false
