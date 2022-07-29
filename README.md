@@ -24,8 +24,16 @@ Pada penerapannya, saya membuat sistem backend (Golang) yang menerapkan feature 
 
 ## Services
 - RESt API
+  - GET `/payment/:payment_id` </br>
+    Mengambil pembayaran berdasarkan id, dengan penerapan `feature flagging` untuk role tertentu yang menggunakan feature baru dan selain itu akan 
+    menggunakan existing feature.
+  - GET `/generate` </br>
+    Penerapan penyebaran feature baru dengan percentage yang di tentukan, percentage sendiri adalah suatu peluang user mendapatkan feature tsb.
+    Untuk lebih jelasnya dapat melihat pada [dokumentasi](https://docs.gofeatureflag.org/v0.27.1/flag_format).
 - Mock RESt API Notifier
-
+  - POST `/notifier` </br>
+    Digunakan untuk menerima pemberitahuan perubahan file config pada services yang menggunakan `feature flagging`, pada contoh ini menerapkan api-key
+    pada header dengan model auth HMAC(SHA256)
 ## References
 - [Pentingnya Feature Toggles Untuk Mobile Apps](https://medium.com/easyread/pentingnya-feature-toggles-feature-flags-untuk-mobile-apps-a31302c247f9)
 - [Feature Toggles (aka Feature Flags)](https://martinfowler.com/articles/feature-toggles.html)
